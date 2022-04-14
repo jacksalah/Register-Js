@@ -14,10 +14,12 @@ function App() {
   const onSubmit = (data) => console.log(data);
 
   return (
-    <header>
+    <body>
       <div className='App'>
         <h1>Register Form</h1>
       </div>
+     
+    
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='Register-form'>
           {/*First and last name checking not empty */}
@@ -64,7 +66,7 @@ function App() {
           <Button type="submit" variant="contained" >Submit</Button>
         </div>
       </form>
-    </header>
+      </body>
   );
 }
 
