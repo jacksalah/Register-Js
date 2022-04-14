@@ -12,59 +12,59 @@ function App() {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => console.log(data);
- 
+
   return (
-  <header>
-     <div className='App'>
-     <h1>Register Form</h1> 
-  </div>
-  <form onSubmit={handleSubmit(onSubmit)}>
-  <div className='Register-form'>
-      {/*First and last name checking not empty */}
+    <header>
+      <div className='App'>
+        <h1>Register Form</h1>
+      </div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className='Register-form'>
+          {/*First and last name checking not empty */}
 
-      <TextField {...register('firstName', { required: true })} label="Firstname" variant="outlined" />
-      <TextField {...register('lastName', { required: true })} label="Lastname" variant="outlined"/>
-      {errors.firstName && <h9>First name is required.</h9>}<br/>
-      {errors.lastName && <h9>Last name is required.</h9>}
-      <br/><br/>
-
-
-    {/*Age  checking not empty and numeric  */}
-      <TextField {...register('age',{ required: true },{ pattern: /\d+/ })} label="Age" variant="outlined" type="number" sx={{ width: 450 }} />
-      {errors.age && <p>Please enter number for age.</p>}<br/><br/>
-   
-    
-  
-   
-  <TextField  {...register('email',{ required: true },{ pattern:  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/})} id="Email" label="Email" variant="outlined" sx={{ width: 450 }}/>
-  {errors.email && <h9>Please enter correct Email.</h9>}
-    <br/><br/>
+          <TextField {...register('firstName', { required: true })} label="Firstname" variant="outlined" />
+          <TextField {...register('lastName', { required: true })} label="Lastname" variant="outlined" />
+          {errors.firstName && <h9>First name is required.</h9>}<br />
+          {errors.lastName && <h9>Last name is required.</h9>}
+          <br /><br />
 
 
-    <TextField  {...register('password',{ required: true },{ pattern:  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/})} id="Password"   label="Password" type="password" variant="outlined" sx={{ width: 450 }}/>
-    {errors.password && <h9>Please enter correct Email.</h9>}
+          {/*Age  checking not empty and numeric  */}
+          <TextField {...register('age', { required: true }, { pattern: /\d+/ })} label="Age" variant="outlined" type="number" sx={{ width: 450 }} />
+          {errors.age && <p>Please enter number for age.</p>}<br /><br />
 
-    <br/><br/>
-    <TextField id="ConfirmPassword" label="Confirm Password" type="password" variant="outlined" sx={{ width: 450 }} />
-    <br/><br/>
-    <TextField id="Salary" label="Salary" type="number" variant="outlined" sx={{ width: 450 }} />
-    <br/><br/>
-     <lable> Favorite Movie :
-       <Autocomplete 
-              
-       disablePortal
-          options={top100Films}
-          sx={{width:450}}
-          renderInput={(params) => <TextField {...params} label="Movie" />} />
-</lable>
-<br/><br/>
-  </div>
-  <div className='App'>
-    
-      <Button type="submit" variant="contained" >Submit</Button>
-  </div>
-  </form>
-  </header> 
+
+
+
+          <TextField  {...register('email', { required: true }, { pattern: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/ })} id="Email" label="Email" variant="outlined" sx={{ width: 450 }} />
+          {errors.email && <h9>Please enter correct Email.</h9>}
+          <br /><br />
+
+
+          <TextField  {...register('password', { required: true }, { pattern: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/ })} id="Password" label="Password" type="password" variant="outlined" sx={{ width: 450 }} />
+          {errors.password && <h9>Please enter correct Email.</h9>}
+
+          <br /><br />
+          <TextField id="ConfirmPassword" label="Confirm Password" type="password" variant="outlined" sx={{ width: 450 }} />
+          <br /><br />
+          <TextField id="Salary" label="Salary" type="number" variant="outlined" sx={{ width: 450 }} />
+          <br /><br />
+          <lable> Favorite Movie :
+            <Autocomplete
+
+              disablePortal
+              options={top100Films}
+              sx={{ width: 450 }}
+              renderInput={(params) => <TextField {...params} label="Movie" />} />
+          </lable>
+          <br /><br />
+        </div>
+        <div className='App'>
+
+          <Button type="submit" variant="contained" >Submit</Button>
+        </div>
+      </form>
+    </header>
   );
 }
 
