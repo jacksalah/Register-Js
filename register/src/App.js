@@ -15,10 +15,11 @@ function App() {
 
   return (
     <body>
+      <header>
       <div className='App'>
         <h1>Register Form</h1>
       </div>
-     
+      </header>
     
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='Register-form'>
