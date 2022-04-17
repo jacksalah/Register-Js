@@ -2,7 +2,7 @@ import './App.css';
 import Button from '@mui/material/Button';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 function App() {
@@ -10,11 +10,18 @@ function App() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    mode:'onChange'
+  });
   const onSubmit = (data) => console.log(data);
 
+  useEffect(() => {
+  console.log('errors===',errors);
+  }, [errors])
+  
+
   return (
-    <body>
+  <>
       <header>
       <div className='App'>
         <h1>Register Form</h1>
@@ -27,8 +34,8 @@ function App() {
 
           <TextField {...register('firstName', { required: true })} label="Firstname" variant="outlined" />
           <TextField {...register('lastName', { required: true })} label="Lastname" variant="outlined" />
-          {errors.firstName && <h9>First name is required.</h9>}<br />
-          {errors.lastName && <h9>Last name is required.</h9>}
+          {errors.firstName && <h6>First name is required.</h6>}<br />
+          {errors.lastName && <h6>Last name is required.</h6>}
           <br /><br />
 
 
@@ -39,27 +46,46 @@ function App() {
 
 
 
-          <TextField  {...register('email', { required: true }, { pattern: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/ })} id="Email" label="Email" variant="outlined" sx={{ width: 450 }} />
-          {errors.email && <h9>Please enter correct Email.</h9>}
+          <input 
+           {...register('email', 
+           {
+            required: true,
+            pattern:
+              /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+          })} id="Email" label="Email" variant="outlined" sx={{ width: 450 }} />
+         {errors.email && (
+                <>
+                  {errors.Email.type == "required" && (
+                    <div className="w-100 text-danger">
+                      This field is required
+                    </div>
+                  )}
+                  {errors.Email.type == "pattern" && (
+                    <div className="w-100 text-danger">
+                      Please write a valid Email
+                    </div>
+                  )}
+                  </>
+                  )}
           <br /><br />
 
-
+          {console.log(errors)}
           <TextField  {...register('password', { required: true }, { pattern: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/ })} id="Password" label="Password" type="password" variant="outlined" sx={{ width: 450 }} />
-          {errors.password && <h9>Please enter correct Email.</h9>}
+          {errors.password && <h6>Please enter correct Password.</h6>}
 
           <br /><br />
           <TextField id="ConfirmPassword" label="Confirm Password" type="password" variant="outlined" sx={{ width: 450 }} />
           <br /><br />
           <TextField id="Salary" label="Salary" type="number" variant="outlined" sx={{ width: 450 }} />
           <br /><br />
-          <lable> Favorite Movie :
+          <label> Favorite Movie :
             <Autocomplete
 
               disablePortal
               options={top100Films}
               sx={{ width: 450 }}
               renderInput={(params) => <TextField {...params} label="Movie" />} />
-          </lable>
+          </label>
           <br /><br />
         </div>
         <div className='App'>
@@ -67,7 +93,7 @@ function App() {
           <Button type="submit" variant="contained" >Submit</Button>
         </div>
       </form>
-      </body>
+     </>
   );
 }
 
