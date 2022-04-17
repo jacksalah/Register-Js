@@ -46,7 +46,7 @@ function App() {
 
 
 
-          <input 
+          <TextField 
            {...register('email', 
            {
             required: true,
@@ -55,12 +55,12 @@ function App() {
           })} id="Email" label="Email" variant="outlined" sx={{ width: 450 }} />
          {errors.email && (
                 <>
-                  {errors.Email.type == "required" && (
+                  {errors.email.type == "required" && (
                     <div className="w-100 text-danger">
                       This field is required
                     </div>
                   )}
-                  {errors.Email.type == "pattern" && (
+                  {errors.email.type == "pattern" && (
                     <div className="w-100 text-danger">
                       Please write a valid Email
                     </div>
