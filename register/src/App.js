@@ -11,23 +11,23 @@ function App() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    mode:'onChange'
+    mode: 'onChange'
   });
   const onSubmit = (data) => console.log(data);
 
   useEffect(() => {
-  console.log('errors===',errors);
+    console.log('errors===', errors);
   }, [errors])
-  
+
 
   return (
-  <>
+    <>
       <header>
-      <div className='App'>
-        <h1>Register Form</h1>
-      </div>
+        <div className='App'>
+          <h1>Register Form</h1>
+        </div>
       </header>
-    
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='Register-form'>
           {/*First and last name checking not empty */}
@@ -40,39 +40,78 @@ function App() {
 
 
           {/*Age  checking not empty and numeric  */}
-          <TextField {...register('age', { required: true }, { pattern: /\d+/ })} label="Age" variant="outlined" type="number" sx={{ width: 450 }} />
-          {errors.age && <p>Please enter number for age.</p>}<br /><br />
-
-
-
-
-          <TextField 
-           {...register('email', 
-           {
-            required: true,
-            pattern:
-              /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-          })} id="Email" label="Email" variant="outlined" sx={{ width: 450 }} />
-         {errors.email && (
-                <>
-                  {errors.email.type == "required" && (
-                    <div className="w-100 text-danger">
-                      This field is required
-                    </div>
-                  )}
-                  {errors.email.type == "pattern" && (
-                    <div className="w-100 text-danger">
-                      Please write a valid Email
-                    </div>
-                  )}
-                  </>
-                  )}
+          <TextField {...register('age', { required: true, pattern: /\d+/, maxLength: 2 })} label="Age" variant="outlined" type="number" sx={{ width: 450 }} />
+          {errors.age && (
+            <>
+              {errors.age.type === "required" && (
+                <div className="w-100 text-danger">
+                  This field is required
+                </div>
+              )}
+              {errors.age.type === "maxLength" && (
+                <div className="w-100 text-danger">
+                  Please write a valid age
+                </div>
+              )}
+            </>
+          )}
           <br /><br />
 
-          {console.log(errors)}
-          <TextField  {...register('password', { required: true }, { pattern: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/ })} id="Password" label="Password" type="password" variant="outlined" sx={{ width: 450 }} />
-          {errors.password && <h6>Please enter correct Password.</h6>}
 
+
+          <TextField
+            {...register('email',
+              {
+                required: true,
+                pattern:
+                  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+              })} id="Email" label="Email" variant="outlined" sx={{ width: 450 }} />
+          {errors.email && (
+            <>
+              {errors.email.type === "required" && (
+                <div className="w-100 text-danger">
+                  This field is required
+                </div>
+              )}
+              {errors.email.type === "pattern" && (
+                <div className="w-100 text-danger">
+                  Please write a valid Email
+                </div>
+              )}
+            </>
+          )}
+          <br /><br />
+
+          <TextField  {...register('password', {
+            required: true,
+            pattern: /^(?=.*[^!@#$%^&*_])(?=.*[a-z])(?=.*[A-Z])(?=.*\d)$/,
+            maxLength: 30,
+            minLength: 6
+          })} id="Password" label="Password" type="password" variant="outlined" sx={{ width: 450 }} />
+          {errors.password && (
+            <>
+              {errors.password.type === "required" && (
+                <div className="w-100 text-danger">
+                  This field is required
+                </div>
+              )}
+              {errors.password.type === "pattern" && (
+                <div className="w-100 text-danger">
+                  Please write a valid Password
+                </div>
+              )}
+              {errors.password.type === "maxLength" && (
+                <div className="w-100 text-danger">
+                  Please write a valid Password less than 30 character
+                </div>
+              )}
+              {errors.password.type === "minLength" && (
+                <div className="w-100 text-danger">
+                  Please write a valid Password more than 6 character
+                </div>
+              )}
+            </>
+          )}
           <br /><br />
           <TextField id="ConfirmPassword" label="Confirm Password" type="password" variant="outlined" sx={{ width: 450 }} />
           <br /><br />
@@ -93,7 +132,7 @@ function App() {
           <Button type="submit" variant="contained" >Submit</Button>
         </div>
       </form>
-     </>
+    </>
   );
 }
 
